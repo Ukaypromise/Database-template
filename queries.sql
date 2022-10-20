@@ -59,3 +59,55 @@ SELECT AVG( weight_kg ) FROM animals;
 SELECT neutered, AVG( escape_attempts ) FROM animals GROUP BY neutered ORDER BY AVG DESC LIMIT 1;
 SELECT species, MIN( weight_kg ), MAX( weight_kg ) FROM animals GROUP BY species;
 SELECT species, AVG( escape_attempts ) FROM animals WHERE date_of_birth BETWEEN '1990-01-01' AND '2000-12-31' GROUP BY species;
+
+/* Queries Using Pgadmin*/ 
+
+/* Querie 1 */
+/* What animals belong to Melody Pond? */
+SELECT animals.name, owners.full_name 
+FROM owners INNER JOIN animals 
+ON owners.id = animals.owners_id
+WHERE owners.full_name = 'Melody Pond';
+
+/* Querie 2 */ 
+/* List of all animals that are pokemon (their type is Pokemon). */ 
+SELECT animals.name, species.name AS species
+FROM species INNER JOIN animals 
+ON species.id = animals.species_id
+WHERE species.name = 'Pokemon';
+
+/* Querie 3 */ 
+/* List all owners and their animals, remember to include those that don't own any animal. */
+SELECT owners.full_name, animals.name
+FROM animals RIGHT JOIN owners
+ON owners.id = animals.owners_id;
+
+/* Querie 4 */ 
+/* How many animals are there per species? */
+SELECT species.name AS Species, count(species_id) AS Total
+FROM animals INNER JOIN species
+ON species.id = animals.species_id
+GROUP BY species.name;
+
+/* Querie 5 */ 
+/* List all Digimon owned by Jennifer Orwell. */
+SELECT owners.full_name AS owner, animals.name AS pet
+FROM animals
+JOIN owners ON owners.id = animals.owners_id
+JOIN species ON species.id = animals.species_id
+WHERE owners.full_name = 'Jennifer Orwell ' AND species.name = 'Digimon';
+
+/* Querie 6 */ 
+/* List all animals owned by Dean Winchester that haven't tried to escape. */
+SELECT owners.full_name, animals.name AS GoodAnimal
+FROM animals
+INNER JOIN owners ON owners.id = animals.owners_id
+WHERE animals.escape_attempts = 0 AND owners.full_name = 'Dean Winchester';
+
+/* Querie 7 */ 
+/* Who owns the most animals? */
+SELECT owners.full_name AS MostAnimal, count(*)
+FROM animals
+INNER JOIN owners ON animals.owners_id = owners.id
+GROUP BY owners.full_name
+ORDER BY count DESC LIMIT 1;

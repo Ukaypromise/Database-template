@@ -50,3 +50,11 @@ UPDATE animals SET owners_id = 2 WHERE name LIKE '%Gabumon%' OR name LIKE '%Pika
 UPDATE animals SET owners_id = 3 WHERE name LIKE '%Devimon%' OR name LIKE '%Plantmon%';
 UPDATE animals SET owners_id = 4 WHERE name LIKE '%Blossom%' OR name LIKE '%Squirtle%' OR name LIKE '%Charmander%';
 UPDATE animals SET owners_id = 5 WHERE name LIKE '%Boarmon%' OR name LIKE '%Angemon%';
+-- Better Way to do it
+UPDATE animals SET species_id=(SELECT id FROM species WHERE species.name LIKE '%mon' LIMIT 1) WHERE name LIKE '%mon';
+UPDATE animals SET species_id=(SELECT id FROM species WHERE species.name NOT LIKE 'Poke%' LIMIT 1) WHERE name NOT LIKE '%mon';
+
+SELECT full_name as animal_owner, COUNT(a.name) FROM owners AS o
+JOIN animals AS a ON a.owner_id = o.id
+GROUP BY full_name
+ORDER BY COUNT(a.name) DESC;
