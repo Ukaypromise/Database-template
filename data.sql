@@ -32,3 +32,29 @@ VALUES ('Blossom', date '1998-10-13', 3, true, 17);
 
 INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg)  
 VALUES ('Ditto', date '2022-05-14', 4, true, 22);
+ /* Populate owners table with data. */
+ INSERT INTO owners(full_name, age) VALUES('Sam Smith', 34);
+ INSERT INTO owners(full_name, age) VALUES('Jennifer Orwell', 19);
+ INSERT INTO owners(full_name, age) VALUES('Bob', 45);
+ INSERT INTO owners(full_name, age) VALUES('Melody Pond', 77);
+ INSERT INTO owners(full_name, age) VALUES('Dean Winchester', 14);
+ INSERT INTO owners(full_name, age) VALUES('Jodie Whittaker', 38);
+
+ INSERT INTO owners(name) VALUES('Pokemon');
+ INSERT INTO owners(name) VALUES('Digimon');
+
+UPDATE animals SET species_id = 2 WHERE name LIKE '%mon';
+UPDATE animals SET species_id = 1 WHERE name NOT LIKE '%mon';
+UPDATE animals SET owners_id = 1 WHERE name LIKE '%Agumon%';
+UPDATE animals SET owners_id = 2 WHERE name LIKE '%Gabumon%' OR name LIKE '%Pikachu%';
+UPDATE animals SET owners_id = 3 WHERE name LIKE '%Devimon%' OR name LIKE '%Plantmon%';
+UPDATE animals SET owners_id = 4 WHERE name LIKE '%Blossom%' OR name LIKE '%Squirtle%' OR name LIKE '%Charmander%';
+UPDATE animals SET owners_id = 5 WHERE name LIKE '%Boarmon%' OR name LIKE '%Angemon%';
+-- Better Way to do it
+UPDATE animals SET species_id=(SELECT id FROM species WHERE species.name LIKE '%mon' LIMIT 1) WHERE name LIKE '%mon';
+UPDATE animals SET species_id=(SELECT id FROM species WHERE species.name NOT LIKE 'Poke%' LIMIT 1) WHERE name NOT LIKE '%mon';
+
+SELECT full_name as animal_owner, COUNT(a.name) FROM owners AS o
+JOIN animals AS a ON a.owner_id = o.id
+GROUP BY full_name
+ORDER BY COUNT(a.name) DESC;
