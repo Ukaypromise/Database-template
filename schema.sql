@@ -20,3 +20,9 @@ CREATE TABLE species (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(250),   
 );
+
+ALTER TABLE animals ADD owners_id VARCHAR(250);
+ALTER TABLE animals ADD species_id VARCHAR(250);
+
+ALTER TABLE animals ADD CONSTRAINT fk_species FOREIGN KEY (species_id) REFERENCES species (id) ON DELETE CASCADE;
+ALTER TABLE animals ADD CONSTRAINT fk_owners FOREIGN KEY (owners_id) REFERENCES owners (id) ON DELETE CASCADE;
