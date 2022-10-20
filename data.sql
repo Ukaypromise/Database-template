@@ -42,3 +42,11 @@ VALUES ('Ditto', date '2022-05-14', 4, true, 22);
 
  INSERT INTO owners(name) VALUES('Pokemon');
  INSERT INTO owners(name) VALUES('Digimon');
+
+UPDATE animals SET species_id = 2 WHERE name LIKE '%mon';
+UPDATE animals SET species_id = 1 WHERE name NOT LIKE '%mon';
+UPDATE animals SET owners_id = 1 WHERE name LIKE '%Agumon%';
+UPDATE animals SET owners_id = 2 WHERE name LIKE '%Gabumon%' OR name LIKE '%Pikachu%';
+UPDATE animals SET owners_id = 3 WHERE name LIKE '%Devimon%' OR name LIKE '%Plantmon%';
+UPDATE animals SET owners_id = 4 WHERE name LIKE '%Blossom%' OR name LIKE '%Squirtle%' OR name LIKE '%Charmander%';
+UPDATE animals SET owners_id = 5 WHERE name LIKE '%Boarmon%' OR name LIKE '%Angemon%';
