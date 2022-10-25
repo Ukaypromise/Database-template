@@ -5,7 +5,7 @@
 
 ## Schema diagram
 
-![Schema diagram](./images/Other.png)
+![Schema diagram For Vet Clinic Database](./images/Other.png)
 
 ## Getting Started
 
